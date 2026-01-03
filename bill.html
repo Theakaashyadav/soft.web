@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web & App Solutions - Detailed Bill</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#eef1ff;color:#0f172a}
+.container{max-width:1200px;margin:40px auto;background:white;padding:30px;border-radius:18px;box-shadow:0 25px 60px rgba(0,0,0,.08);}
+h1{text-align:center;margin-bottom:5px}
+.subtitle{text-align:center;margin-bottom:25px;opacity:.7}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
+.section{background:#f8f9ff;border:1px solid #d9ddff;padding:18px;border-radius:14px}
+.section h2{margin-bottom:8px;font-size:17px}
+label{font-size:13px;margin:6px 0;display:block}
+input,select,textarea{width:100%;padding:10px;border:1px solid #c7ccff;border-radius:8px;margin-bottom:10px}
+textarea{resize:none;height:80px}
+
+/* ===== FIXED ITEM ROW ===== */
+.item-row{display:flex;gap:10px;margin-bottom:6px;align-items:flex-start;}
+.item-row .itemName{flex:1;}
+.item-row .itemRate{width:120px;}
+
+/* BUTTONS */
+button{padding:10px 18px;border:none;border-radius:10px;font-size:14px;cursor:pointer}
+.add-item{background:#10b981;color:white;margin-bottom:10px}
+.generate{background:#6366f1;color:white}
+.print{background:#0ea5e9;color:white}
+
+/* BILL OUTPUT */
+.bill-box{display:none;background:white;border:1px solid #d0d0d0;border-radius:12px;padding:35px;max-width:900px;margin:35px auto;position:relative;}
+.bill-top{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0f172a;padding-bottom:12px;margin-bottom:16px}
+.brand{font-size:22px;font-weight:700}
+.bill-id{font-size:14px}
+
+/* CLIENT + PROVIDER INFO CLEAN LOOK */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  background-color: #fff;
+}
+.detail-grid p {
+  padding: 6px 4px;
+  margin: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+.detail-grid p:last-child {
+  border-bottom: none;
+}
+.detail-grid b {
+  display: inline-block;
+  width: 90px;
+  color: #0f172a;
+  font-weight: 500;
+}
+.detail-grid span {
+  color: #111;
+  word-break: break-word;
+}
+
+/* Summary Right Column */
+.summary-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  text-align:right;
+  justify-items:end;
+  font-size:15px;
+}
+.summary-grid p{
+  margin:2px 0;
+  width:100%;
+  text-align:right;
+}
+
+.table-box table{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px}
+.table-box th,.table-box td{border:1px solid #000;padding:6px;text-align:left}
+.table-box th{background:#f2f2f2}
+
+/* Signature */
+.signature-box{margin-top:25px;text-align:right;}
+.signature{display:inline-block;border-top:2px solid #000;padding-top:5px;font-weight:600;}
+.sign-note{font-size:12px;margin-top:5px;opacity:.7;}
+
+/* Paid Stamp */
+/* Paid Stamp in Box at Bottom Center */
+.paid-stamp {
+  position: absolute;
+  bottom: 40px;             
+  left: 50%;                
+  transform: translateX(-50%) rotate(-10deg); 
+  color: #10b981;
+  font-size: 40px;
+  font-weight: 700;
+  opacity: 0.8;
+  background-color: rgba(255,255,255,0.9); 
+  border: 3px solid #10b981;             
+  padding: 15px 30px;                     
+  border-radius: 12px;                    
+  text-align: center;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Print Styles */
+@media print {
+  .paid-stamp {
+    color: #000;                 /* black text for print */
+    border-color: #000;           /* black border */
+    background-color: #fff;       /* white background */
+    opacity: 0.4;                 /* subtle */
+  }
+}
+
+
+@media print{
+@page{size:A4;margin:16mm}
+body{background:white}
+form,.btn-area,h1,.subtitle{display:none !important}
+.container{box-shadow:none;border-radius:0;margin:0;padding:0}
+.bill-box{display:block !important;border:1px solid #000;border-radius:0;width:100%;padding:22px}
+.table-box table{font-size:13px}
+.paid-stamp{color:#000;opacity:0.4;} /* stamp visible in print */
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>🧾 Web & App Solutions Detailed Bill</h1>
+<p class="subtitle">Fill details & generate professional printable bill</p>
+
+<form id="billForm">
+
+<!-- CLIENT INFO -->
+<div class="section">
+<h2>Client Information</h2>
+
+<label>Client / Company Name</label>
+<input type="text" id="clientName">
+
+<label>Contact Number</label>
+<input type="text" id="contact">
+
+<label>Email</label>
+<input type="email" id="email">
+
+<label>Website URL</label>
+<input type="text" id="website" placeholder="https://example.com">
+
+<label>Address</label>
+<textarea id="address"></textarea>
+</div>
+
+<!-- PROVIDER INFO -->
+<div class="section">
+<h2>Provider Information</h2>
+<label>Company / Freelancer Name</label>
+<input type="text" id="providerName">
+<label>Contact</label>
+<input type="text" id="providerContact">
+<label>Email</label>
+<input type="email" id="providerEmail">
+<label>Address</label>
+<textarea id="providerAddress"></textarea>
+</div>
+
+<!-- ITEMS -->
+<div class="section">
+<h2>Items / Services</h2>
+<div id="itemContainer">
+<div class="item-row">
+<textarea placeholder="Item Description" class="itemName" rows="2"></textarea>
+<input type="number" placeholder="Rate (₹)" class="itemRate" min="0">
+</div>
+</div>
+<button type="button" class="add-item" onclick="addItem()">+ Add More Item</button>
+</div>
+
+<!-- PAYMENT -->
+<div class="section">
+<h2>Payment & Billing Settings</h2>
+
+<label>Advance Payment (₹)</label>
+<input type="number" id="advAmount" value="0" min="0">
+
+<label>Final Payment (₹)</label>
+<input type="number" id="finalAmount" value="0" min="0">
+
+<label>GST %</label>
+<input type="number" id="gstPercent" value="0" min="0">
+
+<label>
+  <input type="checkbox" id="isPaid"> Mark as Paid
+</label>
+
+<p style="font-size:12px;opacity:.7">
+If Advance & Final are 0, system will auto split 40% Advance | 60% Final.
+</p>
+</div>
+
+</form>
+
+<div class="btn-area">
+<button class="generate" onclick="generateBill()">Generate Bill</button>
+<button class="print" onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<!-- BILL OUTPUT -->
+<div class="bill-box" id="billBox">
+<div id="paidStamp" class="paid-stamp" style="display:none;">PAID</div>
+
+<div class="bill-top">
+<div class="brand"><i class="fa-solid fa-receipt"></i> BILL</div>
+<div class="bill-id" id="billNumber"></div>
+</div>
+
+<h3>Client Details</h3>
+<div class="detail-grid">
+<p><b>Name:</b> <span id="outClient"></span></p>
+<p><b>Contact:</b> <span id="outContact"></span></p>
+<p><b>Email:</b> <span id="outEmail"></span></p>
+<p><b>Website:</b> <span id="outWebsite"></span></p>
+<p><b>Address:</b> <span id="outAddress"></span></p>
+</div>
+
+<h3>Provider Details</h3>
+<div class="detail-grid">
+<p><b>Name:</b> <span id="outProvider"></span></p>
+<p><b>Contact:</b> <span id="outProviderContact"></span></p>
+<p><b>Email:</b> <span id="outProviderEmail"></span></p>
+<p><b>Address:</b> <span id="outProviderAddress"></span></p>
+</div>
+
+<h3>Items / Services</h3>
+<div class="table-box">
+<table>
+<thead>
+<tr>
+<th>Item Description</th>
+<th>Rate (₹)</th>
+<th>Total (₹)</th>
+</tr>
+</thead>
+<tbody id="outItems"></tbody>
+</table>
+</div>
+
+<h3>Payment Breakup</h3>
+<div class="table-box">
+<table>
+<thead>
+<tr>
+<th>Payment Stage</th>
+<th>Amount (₹)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Advance</td><td id="pay1"></td></tr>
+<tr><td>Final Payment</td><td id="pay2"></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="summary-grid">
+<p><b>Subtotal:</b> ₹<span id="subTotal"></span></p>
+<p><b>GST Amount:</b> ₹<span id="gstAmount"></span></p>
+<p><b>Grand Total:</b> ₹<span id="grandTotal"></span></p>
+</div>
+
+<div class="signature-box">
+<div class="signature">Authorised Signature</div>
+<p class="sign-note">This is a system-generated bill. No physical signature is required.</p>
+</div>
+
+</div>
+</div>
+
+<script>
+function addItem(){
+  const container = document.getElementById('itemContainer');
+  const row = document.createElement('div');
+  row.className='item-row';
+  row.innerHTML = `
+    <textarea placeholder="Item Description" class="itemName" rows="2"></textarea>
+    <input type="number" placeholder="Rate (₹)" class="itemRate" min="0">
+  `;
+  container.appendChild(row);
+}
+
+function generateBill(){
+
+const names = document.querySelectorAll('.itemName');
+const rates = document.querySelectorAll('.itemRate');
+
+let tbodyHTML = "";
+let subtotal = 0;
+
+for(let i=0;i<names.length;i++){
+const name = names[i].value || '-';
+const rate = Number(rates[i].value) || 0;
+subtotal += rate;
+
+tbodyHTML += `<tr>
+<td>${name.replace(/\n/g, "<br>")}</td>
+<td>${rate.toFixed(2)}</td>
+<td>${rate.toFixed(2)}</td>
+</tr>`;
+}
+
+// Client
+document.getElementById('outClient').innerText = clientName.value;
+document.getElementById('outContact').innerText = contact.value;
+document.getElementById('outEmail').innerText = email.value;
+document.getElementById('outWebsite').innerText = website.value;
+document.getElementById('outAddress').innerText = address.value;
+
+// Provider
+document.getElementById('outProvider').innerText = providerName.value;
+document.getElementById('outProviderContact').innerText = providerContact.value;
+document.getElementById('outProviderEmail').innerText = providerEmail.value;
+document.getElementById('outProviderAddress').innerText = providerAddress.value;
+
+// Items
+document.getElementById('outItems').innerHTML = tbodyHTML;
+
+// Summary
+document.getElementById('subTotal').innerText = subtotal.toFixed(2);
+
+let gstPercent = Number(document.getElementById('gstPercent').value) || 0;
+let gstAmount = (subtotal * gstPercent) / 100;
+let grandTotal = subtotal + gstAmount;
+
+document.getElementById('gstAmount').innerText = gstAmount.toFixed(2);
+document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
+
+// Payments
+let adv = Number(advAmount.value) || 0;
+let final = Number(finalAmount.value) || 0;
+
+if(adv === 0 && final === 0){
+adv = Math.round(grandTotal * 0.40);
+final = grandTotal - adv;
+}
+if(adv > 0 && final === 0) final = grandTotal - adv;
+if(final > 0 && adv === 0) adv = grandTotal - final;
+
+pay1.innerText = adv;
+pay2.innerText = final;
+
+billNumber.innerText =  "  Date: " + new Date().toLocaleDateString();
+
+// Show/hide PAID stamp
+const paidCheckbox = document.getElementById('isPaid');
+const paidStamp = document.getElementById('paidStamp');
+paidStamp.style.display = paidCheckbox.checked ? 'block' : 'none';
+
+billBox.style.display='block';
+}
+</script>
+
+</body>
+</html>

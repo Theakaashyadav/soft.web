@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Web & App Solutions</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#eef1ff;color:#0f172a}
+.container{
+max-width:1200px;margin:40px auto;background:white;padding:30px;
+border-radius:18px;box-shadow:0 25px 60px rgba(0,0,0,.08)
+}
+h1{text-align:center;margin-bottom:5px}
+.subtitle{text-align:center;margin-bottom:25px;opacity:.7}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
+.section{
+background:#f8f9ff;border:1px solid #d9ddff;padding:18px;border-radius:14px
+}
+.section h2{margin-bottom:8px;font-size:17px}
+label{font-size:13px;margin:6px 0;display:block}
+input,select,textarea{
+width:100%;padding:10px;border:1px solid #c7ccff;border-radius:8px;margin-bottom:10px
+}
+textarea{resize:none;height:80px}
+.feature-list label{display:flex;gap:8px;font-size:13px}
+.packageBox{
+background:white;border:1px dashed #818cf8;padding:10px;border-radius:10px;margin-top:8px
+}
+.packageBox h4{margin-bottom:5px}
+.packageBox ul{margin-left:18px;font-size:13px}
+.btn-area{text-align:center;margin-top:18px}
+button{
+padding:12px 20px;border:none;border-radius:10px;font-size:15px;cursor:pointer
+}
+.generate{background:#6366f1;color:white}
+.print{background:#0ea5e9;color:white}
+
+/* QUOTATION PREVIEW */
+.quote-box{
+display:none;background:white;border:1px solid #d0d0d0;border-radius:12px;
+padding:35px;max-width:900px;margin:35px auto
+}
+.quote-top{
+display:flex;justify-content:space-between;align-items:center;
+border-bottom:2px solid #0f172a;padding-bottom:12px;margin-bottom:16px
+}
+.brand{font-size:22px;font-weight:700}
+.quote-id{font-size:14px}
+.section-block{
+border:1px solid #000;padding:12px;border-radius:8px;margin-top:12px
+}
+.section-block h3{
+font-size:15px;border-bottom:1px solid #000;margin-bottom:6px;padding-bottom:3px
+}
+.detail-grid{
+display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px
+}
+.table-box table{
+width:100%;border-collapse:collapse;font-size:14px
+}
+.table-box th,.table-box td{
+border:1px solid #000;padding:6px;text-align:left
+}
+.table-box th{background:#f2f2f2}
+
+/* Signature */
+.sign-row{
+display:flex;justify-content:space-between;margin-top:20px
+}
+.sig{
+width:45%;text-align:center;font-size:14px
+}
+.note{margin-top:10px;font-size:13px}
+
+/* PRINT */
+@media print{
+@page{size:A4;margin:16mm}
+body{background:white}
+form,.btn-area,h1,.subtitle{display:none !important}
+.container{box-shadow:none;border-radius:0;margin:0;padding:0}
+.quote-box{display:block !important;border:1px solid #000;border-radius:0;width:100%;padding:22px}
+.section-block{page-break-inside:avoid}
+.table-box table{font-size:13px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>📄 Web & App Solutions Quotation</h1>
+<p class="subtitle">Fill details & generate professional printable quotation</p>
+
+<form id="quoteForm">
+
+<!-- CLIENT -->
+<div class="section">
+<h2>Client Information</h2>
+<label>Client / Company Name</label>
+<input type="text" id="clientName">
+<label>Contact Number</label>
+<input type="text" id="contact">
+<label>Email</label>
+<input type="email" id="email">
+<label>Address</label>
+<textarea id="address"></textarea>
+</div>
+
+<!-- PROJECT -->
+<div class="section">
+<h2>Project Details</h2>
+
+<label>Solution Type</label>
+<select id="solutionType">
+<option value="">Select</option>
+<option>Website Development</option>
+<option>Mobile App Development</option>
+<option>Both Website + App</option>
+</select>
+
+<label>Business Type</label>
+<input type="text" id="businessType" placeholder="Ex. Tiffin Service, E-Commerce, School">
+
+<label>Existing Status</label>
+<select id="hasExisting" onchange="toggleExisting()">
+<option value="No">No</option>
+<option>Website Exists</option>
+<option>App Exists</option>
+<option>Both Exist</option>
+</select>
+
+<div id="existingBlock">
+<label>Existing URL</label>
+<input type="text" id="existingUrl">
+<label>Technology</label>
+<input type="text" id="existingTech">
+</div>
+
+<label>Select Package Type</label>
+<select id="packageType" onchange="updatePackages()">
+<option value="">Select Type</option>
+<option value="static">Static Website</option>
+<option value="dynamic">Dynamic Website</option>
+</select>
+
+<label>Select Package Plan</label>
+<select id="packagePlan" onchange="applyPackage()">
+<option value="">Select Plan</option>
+</select>
+
+<div class="packageBox" id="packageDetails" style="display:none">
+<h4>Package Features</h4>
+<ul id="packageFeatures"></ul>
+<p><b>Delivery:</b> <span id="packageDelivery"></span></p>
+</div>
+
+<label>Additional Features (Not included in plan)</label>
+<textarea id="extraFeatures" placeholder="Write extra required features..."></textarea>
+
+<label>Additional Requirements</label>
+<textarea id="requirements"></textarea>
+
+<label>Description</label>
+<textarea id="description"></textarea>
+</div>
+
+<!-- TIMELINE + COST -->
+<div class="section">
+<h2>Timeline & Costing</h2>
+
+<label>Estimated Delivery Time</label>
+<input type="text" id="timeline">
+
+<label>Subtotal Cost (₹)</label>
+<input type="number" id="cost">
+
+<label>GST %</label>
+<input type="number" id="gst" placeholder="18">
+
+<label>Advance Required (₹)</label>
+<input type="number" id="advance">
+
+<label>Support & Maintenance</label>
+<input type="text" id="support">
+</div>
+
+<!-- PROVIDER -->
+<div class="section">
+<h2>Provider Details</h2>
+<label>Company / Freelancer Name</label>
+<input type="text" id="myName">
+<label>Contact</label>
+<input type="text" id="myContact">
+<label>Email</label>
+<input type="text" id="myEmail">
+</div>
+
+</form>
+
+<div class="btn-area">
+<button class="generate" onclick="generateQuote()">Generate Quotation</button>
+<button class="print" onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<!-- ================= OUTPUT ================= -->
+<div class="quote-box" id="quoteBox">
+
+<div class="quote-top">
+<div class="brand"><i class="fa-solid fa-file-invoice"></i> OFFICIAL QUOTATION</div>
+<div class="quote-id" id="quoteGeneratedDate"></div>
+</div>
+
+<div class="section-block">
+<h3>Client Details</h3>
+<div class="detail-grid">
+<p><b>Name:</b> <span id="outClient"></span></p>
+<p><b>Contact:</b> <span id="outContact"></span></p>
+<p><b>Email:</b> <span id="outEmail"></span></p>
+<p><b>Address:</b> <span id="outAddress"></span></p>
+</div>
+</div>
+
+<div class="section-block">
+<h3>Project Details</h3>
+<div class="detail-grid">
+<p><b>Solution:</b> <span id="outSolution"></span></p>
+<p><b>Business Type:</b> <span id="outBusiness"></span></p>
+<p><b>Existing:</b> <span id="outHasExisting"></span></p>
+<p><b>URL:</b> <span id="outExistingUrl"></span></p>
+<p><b>Technology:</b> <span id="outExistingTech"></span></p>
+<p><b>Maintainence/Support:</b> <span id="outSupport"></span></p>
+</div>
+
+<div class="table-box">
+<table>
+<thead>
+<tr><th>Package Features</th></tr>
+</thead>
+<tbody id="outFeatures"></tbody>
+</table>
+</div>
+
+<p style="margin-top:6px"><b>Additional Features:</b></p>
+<p id="outExtra"></p>
+
+<p style="margin-top:6px"><b>Additional Requirement:</b></p>
+<p id="outReq"></p>
+
+<p style="margin-top:6px"><b>Description:</b></p>
+<p id="outDesc"></p>
+
+</div>
+
+<div class="section-block">
+<h3>Time & Cost</h3>
+<div class="detail-grid">
+<p><b>Delivery Time:</b> <span id="outTimeline"></span></p>
+<p><b>Subtotal:</b> ₹<span id="outCost"></span></p>
+<p><b>GST:</b> <span id="outGST"></span>%</p>
+<p><b>Grand Total:</b> ₹<span id="outGrand"></span></p>
+
+<p><b></b><span id="outAdvance"></span></p>
+
+</div>
+
+<!-- PAYMENT BREAKUP ADDED -->
+<div class="table-box" style="margin-top:10px">
+<table>
+<thead>
+<tr>
+<th>Payment Stage</th>
+<th>Percentage</th>
+<th>Amount (₹)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Advance</td><td>60%</td><td id="pay1"></td></tr>
+<tr><td>Final Payment</td><td>40%</td><td id="pay2"></td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<div class="section-block">
+<h3>Provider Details</h3>
+<div class="detail-grid">
+<p><b>Name:</b> <span id="outMyName"></span></p>
+<p><b>Contact:</b> <span id="outMyContact"></span></p>
+<p><b>Email:</b> <span id="outMyEmail"></span></p>
+</div>
+</div>
+
+<div class="sign-row">
+<div class="sig"><hr>Client Signature</div>
+<div class="sig"><hr>Authorized Signature</div>
+</div>
+
+<p class="note"><i>This is an estimated quotation. Final price may change after discussion.</i></p>
+
+</div>
+</div>
+
+<script>
+// HIDE EXISTING URL IF NO
+function toggleExisting(){
+let val=document.getElementById("hasExisting").value;
+document.getElementById("existingBlock").style.display = val==="No" ? "none" : "block";
+}
+toggleExisting();
+
+// PACKAGE DATA
+const packages = {
+static:{
+basic:{price:5000,delivery:"5 Days",features:["1–3 Pages","Responsive Design","Simple UI","Contact Form","Basic SEO","Fast Loading"]},
+medium:{price:10000,delivery:"10 Days",features:["4–6 Pages","Modern UI","Responsive","SEO Friendly","Contact + Map","Speed Optimized","Security Setup"]},
+advanced:{price:18000,delivery:"20–30 Days",features:["Up to 10 Pages","Premium UI/UX","Animations","Advanced SEO","Security","Performance Optimization"]}
+},
+dynamic:{
+basic:{price:20000,delivery:"10 Days",features:["Admin Panel","Dynamic Content","Database","Email Form","Responsive","Basic Security"]},
+medium:{price:40000,delivery:"15 Days",features:["Admin Dashboard","User Login","CMS","Email System","Role Based Access","SEO Dynamic Pages"]},
+advanced:{price:70000,delivery:"20–30 Days",features:["Custom Features","Payment Gateway","API Integration","High Security","Analytics","Scalable System"]}
+}
+};
+
+// update plans
+function updatePackages(){
+let type=document.getElementById("packageType").value;
+let plan=document.getElementById("packagePlan");
+plan.innerHTML='<option value="">Select Plan</option>';
+if(!type)return;
+plan.innerHTML+=`
+<option value="basic">Basic</option>
+<option value="medium">Medium</option>
+<option value="advanced">Advanced</option>`;
+}
+
+// apply package
+function applyPackage(){
+let type=document.getElementById("packageType").value;
+let plan=document.getElementById("packagePlan").value;
+if(!type||!plan)return;
+let data=packages[type][plan];
+document.getElementById("cost").value=data.price;
+document.getElementById("timeline").value=data.delivery;
+document.getElementById("packageDetails").style.display="block";
+document.getElementById("packageFeatures").innerHTML=
+data.features.map(f=>`<li>${f}</li>`).join("");
+document.getElementById("packageDelivery").innerText=data.delivery;
+}
+
+// generate
+function generateQuote(){
+let type=document.getElementById("packageType").value;
+let plan=document.getElementById("packagePlan").value;
+let featuresHTML = "";
+
+if(type && plan){
+packages[type][plan].features.forEach(f=>{
+featuresHTML+=`<tr><td>${f}</td></tr>`;
+});
+}else{
+featuresHTML="<tr><td>No Package Selected</td></tr>";
+}
+
+let cost = Number(document.getElementById('cost').value || 0);
+let gst = Number(document.getElementById('gst').value || 0);
+let grand = cost + (cost * gst / 100);
+
+// PAYMENT BREAKUP CALC
+let p1 = Math.round(grand * 0.60);
+let p2 = Math.round(grand * 0.40);
+
+
+document.getElementById('pay1').innerText=p1;
+document.getElementById('pay2').innerText=p2;
+
+
+document.getElementById('quoteGeneratedDate').innerText ="Date: " + new Date().toLocaleDateString();
+
+document.getElementById('outClient').innerText=document.getElementById('clientName').value;
+document.getElementById('outContact').innerText=document.getElementById('contact').value;
+document.getElementById('outEmail').innerText=document.getElementById('email').value;
+document.getElementById('outAddress').innerText=document.getElementById('address').value;
+
+document.getElementById('outSolution').innerText=document.getElementById('solutionType').value;
+document.getElementById('outBusiness').innerText=document.getElementById('businessType').value;
+document.getElementById('outHasExisting').innerText=document.getElementById('hasExisting').value;
+document.getElementById('outExistingUrl').innerText=document.getElementById('existingUrl').value||"-";
+document.getElementById('outExistingTech').innerText=document.getElementById('existingTech').value||"-";
+
+document.getElementById('outFeatures').innerHTML = featuresHTML;
+document.getElementById('outExtra').innerText=document.getElementById('extraFeatures').value||"-";
+document.getElementById('outReq').innerText=document.getElementById('requirements').value||"-";
+document.getElementById('outDesc').innerText=document.getElementById('description').value||"-";
+
+document.getElementById('outTimeline').innerText=document.getElementById('timeline').value;
+document.getElementById('outCost').innerText=cost;
+document.getElementById('outGST').innerText=gst;
+document.getElementById('outGrand').innerText=grand;
+document.getElementById('outAdvance').innerText=document.getElementById('advance').value;
+document.getElementById('outSupport').innerText=document.getElementById('support').value;
+
+document.getElementById('outMyName').innerText=document.getElementById('myName').value;
+document.getElementById('outMyContact').innerText=document.getElementById('myContact').value;
+document.getElementById('outMyEmail').innerText=document.getElementById('myEmail').value;
+
+document.getElementById('quoteBox').style.display='block';
+}
+</script>
+
+</body>
+</html>

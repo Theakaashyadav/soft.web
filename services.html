@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Services | Website & App Development</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="header.css">
+
+
+<style>
+:root{
+    --primary:#2563eb;
+    --secondary:#1e40af;
+    --dark:#0f172a;
+    --light:#f8fafc;
+    --gray:#64748b;
+    --border:#e5e7eb;
+    --glass:rgba(255,255,255,.75);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:linear-gradient(180deg,#f8fafc,#eef2ff);
+    color:var(--dark);
+}
+
+/* ===== HEADER ===== */
+.header{
+    padding:100px 20px 120px;
+    text-align:center;
+    background:radial-gradient(circle at top,#3b82f6,#1e3a8a);
+    color:#fff;
+}
+
+.header h1{
+    font-size:3rem;
+    font-weight:700;
+}
+
+.header p{
+    max-width:760px;
+    margin:20px auto 0;
+    font-size:1.05rem;
+    opacity:.95;
+}
+
+/* ===== SERVICES ===== */
+.services{
+    padding:100px 20px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:70px;
+}
+
+.section-title h2{
+    font-size:2.4rem;
+}
+
+.section-title p{
+    margin-top:10px;
+    color:var(--gray);
+}
+
+/* ===== GRID ===== */
+.service-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:35px;
+}
+
+.service-card{
+    background:var(--glass);
+    backdrop-filter:blur(10px);
+    padding:40px;
+    border-radius:24px;
+    border:1px solid var(--border);
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.service-card:hover{
+    transform:translateY(-12px);
+    box-shadow:0 30px 60px rgba(37,99,235,.2);
+}
+
+.icon-box{
+    width:60px;
+    height:60px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.icon-box svg{
+    color:#fff;
+    width:30px;
+    height:30px;
+}
+
+.service-card h3{
+    font-size:1.4rem;
+    margin-bottom:10px;
+}
+
+.service-card p{
+    color:var(--gray);
+    font-size:.95rem;
+    line-height:1.7;
+}
+
+.service-card ul{
+    list-style:none;
+    margin-top:18px;
+}
+
+.service-card ul li{
+    padding-left:26px;
+    position:relative;
+    margin-bottom:10px;
+    font-size:.92rem;
+}
+
+.service-card ul li::before{
+    content:"✔";
+    position:absolute;
+    left:0;
+    color:var(--primary);
+}
+
+/* ===== ADDONS ===== */
+.addons{
+    margin-top:110px;
+    background:#fff;
+    padding:70px;
+    border-radius:30px;
+    border:1px solid var(--border);
+}
+
+.addons h3{
+    font-size:2rem;
+}
+
+.addons p{
+    color:var(--gray);
+    margin-top:8px;
+}
+
+.addons ul{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+    margin-top:30px;
+    list-style:none;
+}
+
+.addons li{
+    padding:18px 20px;
+    border-radius:14px;
+    background:#f8fafc;
+    border:1px solid var(--border);
+    transition:.3s;
+}
+
+.addons li:hover{
+    transform:translateY(-4px);
+    border-color:var(--primary);
+}
+
+/* ===== CTA ===== */
+.cta{
+    margin-top:120px;
+    padding:90px 20px;
+    background:linear-gradient(135deg,#1e40af,#2563eb);
+    text-align:center;
+    border-radius:35px;
+    color:#fff;
+}
+
+.cta h2{
+    font-size:2.5rem;
+}
+
+.cta p{
+    margin:20px 0 35px;
+    opacity:.95;
+}
+
+.cta a{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 45px;
+    background:#fff;
+    color:var(--primary);
+    font-weight:600;
+    border-radius:50px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.cta a:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+/* ===== FOOTER ===== */
+footer{
+    padding:30px;
+    text-align:center;
+    color:var(--gray);
+    font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+<header id="top-header" class="top-header"></header>
+<section class="header" data-aos="fade-down">
+    <h1>Our Services</h1>
+    <p>Modern digital solutions designed to scale your business and elevate your brand.</p>
+</section>
+
+<section class="services">
+
+<div class="section-title" data-aos="fade-up">
+    <h2>What We Offer</h2>
+    <p>High-quality services built with performance and growth in mind</p>
+</div>
+
+<div class="service-grid">
+
+    <div class="service-card" data-aos="fade-up">
+        <div class="icon-box"><i data-lucide="monitor"></i></div>
+        <h3>Website Development</h3>
+        <p>Fast, responsive, and SEO-friendly websites.</p>
+        <ul>
+            <li>Static & Dynamic Websites</li>
+            <li>Business & Portfolio</li>
+            <li>E-commerce Solutions</li>
+        </ul>
+    </div>
+
+    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon-box"><i data-lucide="smartphone"></i></div>
+        <h3>App Development</h3>
+        <p>Powerful mobile applications for Android & iOS.</p>
+        <ul>
+            <li>Native & Hybrid Apps</li>
+            <li>API Integration</li>
+            <li>Scalable Architecture</li>
+        </ul>
+    </div>
+
+    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="icon-box"><i data-lucide="pen-tool"></i></div>
+        <h3>UI / UX Design</h3>
+        <p>Designs focused on conversion & experience.</p>
+        <ul>
+            <li>User Research</li>
+            <li>Mobile-first UI</li>
+            <li>Brand Consistency</li>
+        </ul>
+    </div>
+
+    <div class="service-card" data-aos="fade-up">
+        <div class="icon-box"><i data-lucide="settings"></i></div>
+        <h3>Maintenance & Support</h3>
+        <p>Ongoing support for smooth operations.</p>
+        <ul>
+            <li>Bug Fixes</li>
+            <li>Security Monitoring</li>
+            <li>Performance Boost</li>
+        </ul>
+    </div>
+
+    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon-box"><i data-lucide="trending-up"></i></div>
+        <h3>SEO & Marketing</h3>
+        <p>Grow traffic and generate quality leads.</p>
+        <ul>
+            <li>SEO Optimization</li>
+            <li>Google Ranking</li>
+            <li>Social Media</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="addons" data-aos="zoom-in">
+    <h3>Optional Add-ons</h3>
+    <p>Boost functionality with advanced features</p>
+    <ul>
+        <li>Blog & CMS</li>
+        <li>Multi-language Support</li>
+        <li>Google Analytics</li>
+        <li>Payment Gateway</li>
+        <li>WhatsApp & Live Chat</li>
+    </ul>
+</div>
+
+<div class="cta" data-aos="fade-up">
+    <h2>Let’s Build Your Next Project</h2>
+    <p>Get a free consultation and project estimate</p>
+    <a href="contact.html">
+        <i data-lucide="send"></i> Get Free Quote
+    </a>
+</div>
+
+</section>
+
+<div id="footer"></div>
+
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    fetch("header.html")
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById("top-header").innerHTML = data;
+        lucide.createIcons(); // re-init icons after load
+    });
+fetch("footer.html")
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById("footer").innerHTML = data;
+        lucide.createIcons(); // re-init icons after load
+    });
+AOS.init({ duration:900, once:true });
+lucide.createIcons();
+</script>
+
+</body>
+</html>

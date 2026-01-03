@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Get a Quote</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="header.css">
+
+
+<style>
+:root{
+    --primary:#2563eb;
+    --secondary:#1e40af;
+    --dark:#0f172a;
+    --light:#f8fafc;
+    --gray:#64748b;
+    --border:#e5e7eb;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:linear-gradient(180deg,#f8fafc,#eef2ff);
+    color:var(--dark);
+}
+
+/* ===== HEADER ===== */
+.header{
+    padding:100px 20px;
+    text-align:center;
+    background:radial-gradient(circle at top,#3b82f6,#1e3a8a);
+    color:#fff;
+}
+
+.header h1{
+    font-size:3rem;
+}
+
+.header p{
+    max-width:750px;
+    margin:20px auto 0;
+    opacity:.95;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:100px 20px;
+}
+
+/* ===== GRID ===== */
+.grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:40px;
+}
+
+@media(max-width:900px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ===== CARD ===== */
+.card{
+    background:#fff;
+    padding:45px;
+    border-radius:30px;
+    border:1px solid var(--border);
+}
+
+/* ===== FORM ===== */
+.card h2{
+    font-size:1.9rem;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:var(--gray);
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    font-size:.9rem;
+    font-weight:500;
+}
+
+input, textarea, select{
+    width:100%;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    margin-top:6px;
+    font-size:.9rem;
+}
+
+textarea{
+    resize:none;
+    height:110px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:#fff;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(0,0,0,.2);
+}
+
+/* ===== CONTACT INFO ===== */
+.info-box{
+    background:linear-gradient(135deg,#1e40af,#2563eb);
+    color:#fff;
+    padding:45px;
+    border-radius:30px;
+}
+
+.info-box h3{
+    font-size:1.8rem;
+}
+
+.info-box p{
+    margin:15px 0 30px;
+    opacity:.95;
+}
+
+.contact-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.contact-item a{
+    color:#fff;
+    text-decoration:none;
+    font-size:.95rem;
+}
+
+.icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:rgba(255,255,255,.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.icon svg{
+    width:20px;
+    height:20px;
+}
+
+/* ===== MAP ===== */
+.map{
+    margin-top:30px;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.3);
+}
+
+.map iframe{
+    width:100%;
+    height:220px;
+    border:none;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    text-align:center;
+    padding:30px;
+    color:var(--gray);
+    font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+ <header id="top-header" class="top-header"></header>
+<section class="header" data-aos="fade-down">
+    <h1>Contact Us</h1>
+    <p>Let’s discuss your project and create something amazing together.</p>
+</section>
+
+<section class="container">
+
+<div class="grid">
+
+    <!-- CONTACT FORM -->
+    <div class="card" data-aos="fade-up">
+        <h2>Get a Free Quote</h2>
+        <p>Fill in your details and we’ll get back to you shortly.</p>
+
+        <form>
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="Enter your phone">
+            </div>
+
+            <div class="form-group">
+                <label>Website Type</label>
+                <select>
+                    <option>Static Website</option>
+                    <option>Dynamic Website</option>
+                    <option>E-commerce Website</option>
+                    <option>Mobile App</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Number of Pages</label>
+                <select>
+                    <option>1 - 5 Pages</option>
+                    <option>6 - 10 Pages</option>
+                    <option>10+ Pages</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Message</label>
+                <textarea placeholder="Tell us about your project"></textarea>
+            </div>
+
+            <button type="submit">Request Quote</button>
+        </form>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="info-box" data-aos="fade-left">
+        <h3>Contact Information</h3>
+        <p>Reach us directly for quick communication.</p>
+
+        <div class="contact-item">
+            <div class="icon"><i data-lucide="phone"></i></div>
+            <a href="tel:+919999999999">+91 99999 99999</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon"><i data-lucide="mail"></i></div>
+            <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon"><i data-lucide="message-circle"></i></div>
+            <a href="https://wa.me/919999999999" target="_blank">Chat on WhatsApp</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon"><i data-lucide="map-pin"></i></div>
+            <span>Greater Noida, Uttar Pradesh, India</span>
+        </div>
+
+        <!-- MAP -->
+        <div class="map">
+            <iframe 
+                src="https://maps.google.com/maps?q=Greater%20Noida&t=&z=13&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+        </div>
+    </div>
+
+</div>
+
+</section>
+
+<div id="footer"></div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+   fetch("header.html")
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById("top-header").innerHTML = data;
+        lucide.createIcons(); // re-init icons after load
+    });
+fetch("footer.html")
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById("footer").innerHTML = data;
+        lucide.createIcons(); // re-init icons after load
+    });
+AOS.init({ duration:900, once:true });
+lucide.createIcons();
+</script>
+
+</body>
+</html>
